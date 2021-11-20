@@ -1,5 +1,10 @@
+require:
+  - rubocop-rake
+  - rubocop-rspec
+
 AllCops:
-  TargetRubyVersion: 2.4
+  TargetRubyVersion: 2.6
+  NewCops: enable
 
 Style/StringLiterals:
   Enabled: true
@@ -10,4 +15,7 @@ Style/StringLiteralsInInterpolation:
   EnforcedStyle: double_quotes
 
 Layout/LineLength:
-  Max: 120
+  Max: 80
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
