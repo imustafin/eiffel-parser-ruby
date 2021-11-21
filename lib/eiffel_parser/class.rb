@@ -3,20 +3,27 @@
 module EiffelParser
   # Representation of Eiffel class
   class Class
-    attr_reader :features
-
     def initialize(lines)
-      global = parse_tree(lines)
+      @global = parse_tree(lines)
+    end
 
-      feature_blocks = global
+    def features
+      feature_blocks = @global
         .filter { |k, _v| k.start_with?("feature") }
         .flat_map(&:last)
 
       feature_trees = parse_tree(feature_blocks)
 
-      @features = feature_trees
+      feature_trees
         .map { |f| make_func(f.first, f.last) }
         .compact
+    end
+
+    def name
+      @global
+        .find { |k, _v| k.start_with?("class") }
+        .last
+        .first.strip
     end
 
     private

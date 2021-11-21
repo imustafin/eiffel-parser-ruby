@@ -12,4 +12,8 @@ RSpec.describe EiffelParser::Class do
       "greet"
     )
   end
+
+  it "extracts class name" do
+    expect(cls.name).to eq("APPLICATION")
+  end
 end
