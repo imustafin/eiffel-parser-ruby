@@ -7,7 +7,7 @@ RSpec.describe EiffelParser::Class do
   let(:lines) { File.open(filename).readlines }
 
   it "extracts feature names" do
-    expect(cls.features.map(&:first)).to contain_exactly(
+    expect(cls.features.map(&:name)).to contain_exactly(
       "make",
       "greet"
     )

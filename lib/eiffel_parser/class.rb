@@ -3,6 +3,8 @@
 module EiffelParser
   # Representation of Eiffel class
   class Class
+    include Utils
+
     def initialize(lines)
       @global = parse_tree(lines)
     end
@@ -15,8 +17,7 @@ module EiffelParser
       feature_trees = parse_tree(feature_blocks)
 
       feature_trees
-        .map { |f| make_func(f.first, f.last) }
-        .compact
+        .map { |f| Feature.new(f.first, f.last) }
     end
 
     def name
@@ -24,47 +25,6 @@ module EiffelParser
         .find { |k, _v| k.start_with?("class") }
         .last
         .first.strip
-    end
-
-    private
-
-    def make_func(signature, _lines)
-      name = signature.split.first.strip.chomp(":")
-
-      [name]
-    end
-
-    def parse_tree(lines) # rubocop:disable Metrics/MethodLength
-      ans = []
-
-      cur_key = nil
-      cur_lines = []
-
-      lines.each do |line|
-        next if line.strip.empty?
-        next if line.strip.start_with?("--")
-
-        tabs = depth(line)
-
-        if tabs.zero?
-          ans << [cur_key, cur_lines] if cur_key
-
-          cur_key = line.strip
-          cur_lines = []
-
-          next
-        end
-
-        cur_lines << line[1..line.size]
-      end
-
-      ans << [cur_key, cur_lines] if cur_key
-
-      ans
-    end
-
-    def depth(line)
-      line.chars.take_while { |x| x == "\t" }.count
     end
   end
 end
