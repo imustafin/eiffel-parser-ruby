@@ -3,7 +3,7 @@
 RSpec.describe EiffelParser::Class do
   subject(:cls) { described_class.new(lines) }
 
-  let(:filename) { "#{File.dirname(__FILE__)}/application.txt" }
+  let(:filename) { "#{File.dirname(__FILE__)}/application.e" }
   let(:lines) { File.open(filename).readlines }
 
   it "extracts feature names" do

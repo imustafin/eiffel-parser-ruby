@@ -1,20 +1,24 @@
 # frozen_string_literal: true
 
 namespace :prepare do
-  # ec should be in PATH
-  desc "Generate ASCII formatted text of class file"
-  task :format_class, [:class] do |_t, args|
+  desc "Prettify file with `ec -pretty` and write output to spec file"
+  task :pretty, [:class, :spec] do |_t, args|
     class_name = args[:class]
-    e = "#{class_name}.e"
-    ecf = "#{class_name}.ecf"
-    txt = "#{class_name}.txt"
 
-    sh "rm -f #{ecf}"
-    sh "ec #{e}"
-    sh "rm -f #{txt}"
-    sh "ec -filter ASCII #{class_name} -config #{ecf} -file #{txt}"
-    sh "rm #{ecf}"
-    sh "rm #{class_name}"
-    sh "rm -rf EIFGENs"
+    spec_name = args[:spec] || class_name
+
+    spec = File.join(
+      __dir__,
+      "../../../spec/eiffel_parser",
+      "#{spec_name}.e"
+    )
+
+    e = "#{class_name}.e"
+
+    result = `ec -pretty \"#{e}\"`
+
+    raise "Could not prettify" if result.empty?
+
+    File.write(spec, result)
   end
 end

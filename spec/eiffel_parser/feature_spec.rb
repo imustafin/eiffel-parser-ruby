@@ -2,7 +2,7 @@
 
 RSpec.describe EiffelParser::Feature do
   let(:cls) { EiffelParser::Class.new(lines) }
-  let(:filename) { "#{File.dirname(__FILE__)}/application.txt" }
+  let(:filename) { "#{File.dirname(__FILE__)}/application.e" }
   let(:lines) { File.open(filename).readlines }
 
   describe "{APPLICATION}.make" do

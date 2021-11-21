@@ -1,6 +1,6 @@
 # EiffelParser
 
-This gem parses *formatted* Eiffel source codes and gives
+This gem parses *pretty* Eiffel source codes and gives
 access to parts of the code.
 
 ## Installation
