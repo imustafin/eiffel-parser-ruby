@@ -18,6 +18,10 @@ RSpec.describe EiffelParser::Feature do
         'greet ("")'
       )
     end
+
+    it "doesn't have note clause" do
+      expect(feature.note).to be_nil
+    end
   end
 
   describe "{APPLICATION}.greet" do
@@ -35,6 +39,12 @@ RSpec.describe EiffelParser::Feature do
         "\tfull_message := \"Hello, \" + a_name + \"!\"",
         "end",
         "print (full_message + \"%N\")"
+      )
+    end
+
+    it "has note clause" do
+      expect(feature.note).to eq(
+        "string_note" => '"str"'
       )
     end
   end

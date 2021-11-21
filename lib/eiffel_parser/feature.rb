@@ -16,10 +16,22 @@ module EiffelParser
 
     def body
       @tree
-        .filter { |k, _v| k.start_with?("do") }
-        .first
+        .find { |k, _v| k.start_with?("do") }
         .last
         .map(&:rstrip)
+    end
+
+    def note
+      clause = @tree
+        .find { |k, _v| k.start_with?("note") }
+
+      return unless clause
+
+      lines = clause.last
+
+      lines
+        .map { |l| l.split(":", 2).map(&:strip) }
+        .to_h
     end
   end
 end
