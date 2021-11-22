@@ -24,9 +24,8 @@ module EiffelParser
         .map(&:rstrip)
     end
 
-    def note
-      clause = @tree
-        .find { |k, _v| k.start_with?("note") }
+    def note_clause
+      clause = @tree.find { |k, _v| k.start_with?("note") }
 
       return unless clause
 
@@ -35,6 +34,30 @@ module EiffelParser
       lines
         .map { |l| l.split(":", 2).map(&:strip) }
         .to_h
+    end
+
+    def require_clause
+      clause = @tree.find { |k, _v| k.start_with?("require") }
+
+      return unless clause
+
+      clause.last
+    end
+
+    def local_clause
+      clause = @tree.find { |k, _v| k.start_with?("local") }
+
+      return unless clause
+
+      clause.last
+    end
+
+    def ensure_clause
+      clause = @tree.find { |k, _v| k.start_with?("ensure") }
+
+      return unless clause
+
+      clause.last
     end
   end
 end

@@ -6,11 +6,12 @@ RSpec.describe EiffelParser::Class do
   let(:filename) { "#{File.dirname(__FILE__)}/application.e" }
   let(:lines) { File.open(filename).readlines }
 
-  it "extracts feature names" do
+  it "extracts feature names" do # rubocop:disable RSpec/ExampleLength
     expect(cls.features.map(&:name)).to contain_exactly(
       "attr",
       "make",
-      "greet"
+      "greet",
+      "titleize"
     )
   end
 

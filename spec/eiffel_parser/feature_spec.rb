@@ -28,13 +28,13 @@ RSpec.describe EiffelParser::Feature do
 
     it "has body lines" do
       expect(feature.body).to contain_exactly(
-        'greet ("World")',
+        'greet ("world")',
         'greet ("")'
       )
     end
 
     it "doesn't have note clause" do
-      expect(feature.note).to be_nil
+      expect(feature.note_clause).to be_nil
     end
   end
 
@@ -50,16 +50,36 @@ RSpec.describe EiffelParser::Feature do
         "if a_name.is_empty then",
         "\tfull_message := \"Hello!\"",
         "else",
-        "\tfull_message := \"Hello, \" + a_name + \"!\"",
+        "\tfull_message := \"Hello, \" + titleize (a_name) + \"!\"",
         "end",
         "print (full_message + \"%N\")"
       )
     end
 
     it "has note clause" do
-      expect(feature.note).to eq(
+      expect(feature.note_clause).to eq(
         "string_note" => '"str"'
       )
+    end
+  end
+
+  describe "{APPLICATION}.titleize" do
+    let(:feature_name) { "titleize" }
+
+    it "has name" do
+      expect(feature.name).to eq("titleize")
+    end
+
+    it "has require clause with correct count" do
+      expect(feature.require_clause.count).to eq(1)
+    end
+
+    it "has local clause with correct count" do
+      expect(feature.local_clause.count).to eq(1)
+    end
+
+    it "has ensure clause with correct count" do
+      expect(feature.ensure_clause.count).to eq(2)
     end
   end
 end
