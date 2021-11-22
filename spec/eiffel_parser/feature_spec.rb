@@ -1,12 +1,26 @@
 # frozen_string_literal: true
 
 RSpec.describe EiffelParser::Feature do
+  subject(:feature) { cls.features.find { |f| f.name == feature_name } }
+
   let(:cls) { EiffelParser::Class.new(lines) }
   let(:filename) { "#{File.dirname(__FILE__)}/application.e" }
   let(:lines) { File.open(filename).readlines }
 
+  describe "{APPLICATION}.attr" do
+    let(:feature_name) { "attr" }
+
+    it "has name" do
+      expect(feature.name).to eq("attr")
+    end
+
+    it "has no body" do
+      expect(feature.body).to be_nil
+    end
+  end
+
   describe "{APPLICATION}.make" do
-    subject(:feature) { cls.features.find { |f| f.name == "make" } }
+    let(:feature_name) { "make" }
 
     it "has name" do
       expect(feature.name).to eq("make")
@@ -25,7 +39,7 @@ RSpec.describe EiffelParser::Feature do
   end
 
   describe "{APPLICATION}.greet" do
-    subject(:feature) { cls.features.find { |f| f.name == "greet" } }
+    let(:feature_name) { "greet" }
 
     it "has name" do
       expect(feature.name).to eq("greet")

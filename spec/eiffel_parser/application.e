@@ -6,6 +6,8 @@ create
 
 feature
 
+	attr: INTEGER
+
 	make
 			-- Start the program
 		do

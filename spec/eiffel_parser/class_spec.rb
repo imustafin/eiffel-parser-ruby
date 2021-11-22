@@ -8,6 +8,7 @@ RSpec.describe EiffelParser::Class do
 
   it "extracts feature names" do
     expect(cls.features.map(&:name)).to contain_exactly(
+      "attr",
       "make",
       "greet"
     )

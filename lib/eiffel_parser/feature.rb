@@ -15,8 +15,11 @@ module EiffelParser
     end
 
     def body
-      @tree
-        .find { |k, _v| k.start_with?("do") }
+      body_clause = @tree.find { |k, _v| k.start_with?("do") }
+
+      return unless body_clause
+
+      body_clause
         .last
         .map(&:rstrip)
     end
