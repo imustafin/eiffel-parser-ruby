@@ -21,8 +21,9 @@ module EiffelParser
     end
 
     def name
+      prefixed = ["deferred class", "class"]
       @global
-        .find { |k, _v| k.start_with?("class") }
+        .find { |k, _v| prefixed.any? { |p| k.start_with?(p) } }
         .last
         .first.strip
     end
