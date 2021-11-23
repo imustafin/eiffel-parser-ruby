@@ -37,4 +37,23 @@ RSpec.describe EiffelParser::Class do
       )
     end
   end
+
+  describe "{RESULT_E}" do
+    let(:file) { "result_e.e" }
+
+    it "has name" do
+      expect(cls.name).to eq("RESULT_E")
+    end
+
+    it "extracts feature names" do # rubocop:disable RSpec/ExampleLength
+      expect(cls.features.map(&:name)).to contain_exactly(
+        "default_create",
+        "make",
+        "ok",
+        "crushed",
+        "pastdest",
+        "item"
+      )
+    end
+  end
 end
